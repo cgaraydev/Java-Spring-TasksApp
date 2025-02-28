@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
@@ -7,6 +7,20 @@
 <body>
 <h1>Home page</h1>
 <br>
-Welcome to our home page!
+<p>
+    Welcome to our home page!
+</p>
+<p>
+    User: <span sec:authentication="principal.username"></span>
+    <br><br>
+    Role(s): <span sec:authentication="principal.authorities"></span>
+</p>
+<p>
+    <a th:href="@{supervisors}">Informacion para supervisores</a>
+    (Solo para supervisores)
+</p>
+<form action="#" th:action="@{/logout}" method="POST">
+    <input type="submit" value="Logout">
+</form>
 </body>
 </html>

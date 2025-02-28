@@ -3,6 +3,7 @@ package com.camilogaray.tasksapp.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -24,11 +25,15 @@ public class AppSecurity {
     @Bean
     public SecurityFilterChain filter(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(conf -> conf
+                        .requestMatchers("/").hasRole("EMPLOYEE")
+                        .requestMatchers("/supervisors/**").hasRole("SUPERVISOR")
+                        .requestMatchers("/operations/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/authenticate")
-                        .permitAll());
+                        .permitAll())
+                .logout(LogoutConfigurer::permitAll);
         return http.build();
     }
 

@@ -11,4 +11,9 @@ public class AppController {
         return "index";
     }
 
+    @GetMapping("/supervisors")
+    public String supervisors() {
+        return "supervisors";
+    }
+
 }
