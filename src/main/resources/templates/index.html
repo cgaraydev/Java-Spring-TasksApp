@@ -15,10 +15,18 @@
     <br><br>
     Role(s): <span sec:authentication="principal.authorities"></span>
 </p>
+<div sec:authorize="hasRole('MANAGER')">
+    <p>
+        <a th:href="@{managers}">Informacion para supervisores</a>
+        (Solo para supervisores)
+    </p>
+</div>
+<div sec:authorize="hasRole('ADMIN')">
 <p>
-    <a th:href="@{supervisors}">Informacion para supervisores</a>
-    (Solo para supervisores)
+    <a th:href="@{admins}">Informacion para administradores</a>
+    (Solo para administradores)
 </p>
+</div>
 <form action="#" th:action="@{/logout}" method="POST">
     <input type="submit" value="Logout">
 </form>

@@ -10,10 +10,24 @@ public class AppController {
     public String index() {
         return "index";
     }
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
 
-    @GetMapping("/supervisors")
-    public String supervisors() {
-        return "supervisors";
+    @GetMapping("/managers")
+    public String managers() {
+        return "managers";
+    }
+
+    @GetMapping("/admins")
+    public String admins() {
+        return "admins";
+    }
+
+    @GetMapping("/unauthorized")
+    public String unauthorized() {
+        return "unauthorized";
     }
 
 }
