@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 public class AppSecurity {
 
     @Bean
-    public UserDetailsManager userDetails(DataSource dataSource){
+    public UserDetailsManager userDetails(DataSource dataSource) {
         return new JdbcUserDetailsManager(dataSource);
     }
 
