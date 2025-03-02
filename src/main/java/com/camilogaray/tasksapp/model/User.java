@@ -20,12 +20,12 @@ public class User {
     private String password;
 
 
-    private boolean enabled = true;
+    private Integer enabled = 1;
 
     public User() {
     }
 
-    public User(String username, String password, boolean enabled) {
+    public User(String username, String password, Integer enabled) {
         this.username = username;
         this.password = password;
         this.enabled = enabled;
@@ -47,11 +47,11 @@ public class User {
         this.password = password;
     }
 
-    public boolean isEnabled() {
+    public Integer isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(Integer enabled) {
         this.enabled = enabled;
     }
 

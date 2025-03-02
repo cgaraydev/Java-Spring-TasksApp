@@ -10,6 +10,7 @@ public class AppController {
     public String index() {
         return "index";
     }
+
     @GetMapping("/login")
     public String login() {
         return "login";
@@ -29,5 +30,14 @@ public class AppController {
     public String unauthorized() {
         return "unauthorized";
     }
+
+    /*
+    @GetMapping("/{id}")
+    public ResponseEntity<Task> getTaskById(@PathVariable int id) {
+    Optional<Task> task = taskService.getTaskById(id);
+    return task.map(ResponseEntity::ok)
+               .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+     */
 
 }

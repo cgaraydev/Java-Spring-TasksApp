@@ -16,7 +16,6 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-
     @NotNull(message = "El título no puede ser nulo")
     @Size(min = 1, max = 255, message = "El título debe tener entre 1 y 255 caracteres")
     private String title;
