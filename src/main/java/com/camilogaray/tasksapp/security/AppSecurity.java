@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -20,19 +21,26 @@ public class AppSecurity {
 
     @Bean
     public SecurityFilterChain filter(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(conf -> conf
-                        .requestMatchers("/").hasRole("EMPLOYEE")
-                        .requestMatchers("/managers/**").hasRole("MANAGER")
-                        .requestMatchers("/admins/**").hasRole("ADMIN")
-                        .anyRequest().authenticated())
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .loginProcessingUrl("/authenticate")
-                        .permitAll())
-                .logout(LogoutConfigurer::permitAll)
-                .exceptionHandling(conf -> conf
-                        .accessDeniedPage("/unauthorized"));
+        http
+                .sessionManagement(session -> session
+                        .maximumSessions(1)
+                        .expiredUrl("/login")
+                        .maxSessionsPreventsLogin(false))
+                        .authorizeHttpRequests(conf -> conf
+                                .requestMatchers("/").authenticated()
+                                .requestMatchers("/managers/**").hasRole("MANAGER")
+                                .requestMatchers("/admins/**").hasRole("ADMIN")
+                                .anyRequest().authenticated())
+                        .formLogin(form -> form
+                                .loginPage("/login")
+                                .loginProcessingUrl("/index")
+                                .defaultSuccessUrl("/index", true)
+                                .permitAll())
+                        .logout(LogoutConfigurer::permitAll)
+                        .exceptionHandling(conf -> conf
+                                .accessDeniedPage("/unauthorized"));
         return http.build();
     }
+
 
 }

@@ -1,4 +1,4 @@
-package com.camilogaray.tasksapp.utils.exceptions;
+package com.camilogaray.tasksapp.exceptions.tasks;
 
 public class TaskNotFoundException extends RuntimeException{
     public TaskNotFoundException(String message) {

@@ -10,7 +10,7 @@
 <body class="d-flex justify-content-center align-items-center vh-100">
 <div class="card text-white bg-dark p-4 shadow-lg w-100" style="max-width: 400px;">
     <h2 class="text-center mb-4">Login</h2>
-    <form action="#" th:action="@{/authenticate}" method="POST">
+    <form action="#" th:action="@{/index}" method="POST">
         <div th:if="${param.error}">
             <div class="alert alert-danger col-xs-offset-1 col-xs-10 mb-3">
                 Nombre de usuario o Contraseña incorrecto

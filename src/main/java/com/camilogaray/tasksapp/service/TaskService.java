@@ -1,8 +1,14 @@
 package com.camilogaray.tasksapp.service;
 
+import com.camilogaray.tasksapp.controller.AppController;
+import com.camilogaray.tasksapp.exceptions.tasks.TaskListException;
 import com.camilogaray.tasksapp.model.Task;
 import com.camilogaray.tasksapp.repo.TaskRepository;
 import jakarta.validation.Valid;
+import org.hibernate.HibernateException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +19,7 @@ import java.util.Optional;
 public class TaskService implements ITaskService {
 
     private final TaskRepository repo;
+    private static final Logger logger = LoggerFactory.getLogger(TaskService.class);
 
     public TaskService(TaskRepository repo) {
         this.repo = repo;
@@ -20,7 +27,17 @@ public class TaskService implements ITaskService {
 
     @Override
     public List<Task> getTasks() {
-        return repo.findAll();
+        try {
+            return repo.findAll();
+        } catch (DataAccessException e) {
+            throw new TaskListException("Error al acceder a la base de datos: " + e.getMessage());
+        } catch (HibernateException e) {
+            logger.error("Error de Hibernate: ", e);
+            throw new TaskListException("Error de Hibernate: " + e.getMessage());
+        } catch (Exception e) {
+            logger.error("Error al obtener la lista de tareas: ", e);
+            throw new TaskListException("Error al obtener la lista de tareas: " + e.getMessage());
+        }
     }
 
     @Override
