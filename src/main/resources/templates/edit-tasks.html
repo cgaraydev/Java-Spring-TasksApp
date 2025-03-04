@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header::header(title='Editar Tareas')}">
+</head>
+<body>
+<div th:replace="~{fragments/navigation :: navigation}"></div>
+<div class="container mt-5 pt-4">
+    <h2 class="text-center mb-4">Gestionar Tareas</h2>
+    <p class="text-center text-muted mb-4">
+        Aquí puedes gestionar todas las tareas. Usa los filtros para encontrar lo que necesitas.
+    </p>
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Buscar tarea...">
+        </div>
+        <div class="col-md-3">
+            <select class="form-select">
+                <option>Prioridad</option>
+                <option>ALTA</option>
+                <option>MEDIA</option>
+                <option>BAJA</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select class="form-select">
+                <option>Estado</option>
+                <option>Pendiente</option>
+                <option>Completado</option>
+            </select>
+        </div>
+    </div>
+    <div class="text-center mb-4">
+        <a th:href="@{/create-task}" class="btn btn-primary">
+            <i class="bi bi-plus"></i> Crear Tarea
+        </a>
+    </div>
+    <div class="row">
+        <div th:each="task : ${tasks}" class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${task.title}"></h5>
+                    <p class="card-text" th:text="${task.description}"></p>
+                    <p><strong>Prioridad:</strong>
+                        <span th:if="${task.priority.toString() == 'ALTA'}" class="badge bg-danger">ALTA</span>
+                        <span th:if="${task.priority.toString() == 'MEDIA'}" class="badge bg-warning">MEDIA</span>
+                        <span th:if="${task.priority.toString() == 'BAJA'}" class="badge bg-success">BAJA</span>
+                    </p>
+                    <p><strong>Encargado:</strong> <span th:text="${task.assignedTo.username}"></span></p>
+                    <p><strong>Estado:</strong>
+                        <span th:if="${task.status.toString() == 'PENDIENTE'}" class="badge bg-warning">Pendiente</span>
+                        <span th:if="${task.status.toString() == 'COMPLETADO'}" class="badge bg-success">Completado</span>
+                    </p>
+                    <div class="d-grid gap-2">
+                        <a th:href="@{/edit-task/{id}(id=${task.id})}" class="btn btn-primary">Editar</a>
+                        <a th:href="@{/delete-task/{id}(id=${task.id})}" class="btn btn-danger">Eliminar</a>
+                        <a th:href="@{/assign-task/{id}(id=${task.id})}" class="btn btn-secondary">Asignar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .card:hover {
+        transform: translateY(-5px);
+        transition: transform 0.2s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+</style>
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

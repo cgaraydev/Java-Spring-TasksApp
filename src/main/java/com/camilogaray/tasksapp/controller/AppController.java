@@ -2,16 +2,16 @@ package com.camilogaray.tasksapp.controller;
 
 import com.camilogaray.tasksapp.model.Task;
 import com.camilogaray.tasksapp.service.ITaskService;
-import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class AppController {
@@ -26,9 +26,9 @@ public class AppController {
     @GetMapping("/")
     public String root(Authentication authentication) {
         if (authentication != null && authentication.isAuthenticated()) {
-            return "redirect:/index";  // Redirige a "/index" si el usuario está autenticado
+            return "redirect:/index";
         } else {
-            return "redirect:/login";  // Redirige a "/login" si el usuario no está autenticado
+            return "redirect:/login";
         }
     }
 
@@ -43,9 +43,27 @@ public class AppController {
     @GetMapping("/login")
     public String login(Authentication authentication) {
         if (authentication != null && authentication.isAuthenticated()) {
-            return "redirect:/index";  // Redirige a "/index" si el usuario ya está autenticado
+            return "redirect:/index";
         }
-        return "login";  // Muestra la página de login si el usuario no está autenticado
+        return "login";
+    }
+
+    @GetMapping("/task-details/{id}")
+    public String viewTask(@PathVariable int id, Model model) {
+        Optional<Task> task = taskService.getTaskById(id);
+        if (task.isPresent()) {
+            model.addAttribute("task", task.get());
+            return "task-details";
+        } else {
+            return "redirect:/index";
+        }
+    }
+
+    @GetMapping("/edit-tasks")
+    public String editTasks(Model model) {
+        List<Task> tasks = taskService.getTasks(); // Obtener todas las tareas
+        model.addAttribute("tasks", tasks); // Pasar las tareas a la vista
+        return "edit-tasks";
     }
 
     @GetMapping("/admins")
@@ -58,21 +76,9 @@ public class AppController {
         return "unauthorized";
     }
 
-}
-    /*
-    @GetMapping("/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable int id) {
-    Optional<Task> task = taskService.getTaskById(id);
-    return task.map(ResponseEntity::ok)
-               .orElseGet(() -> ResponseEntity.notFound().build());
+    @GetMapping("/create-task")
+    public String createTask(){
+        return "create-task";
     }
 
-      @GetMapping("/")
-    public String home(HttpSession session) {
-        if (session.getAttribute("user") == null) {
-            return "redirect:/index";
-        } else {
-            return "redirect:/login";
-        }
-    }
-     */
+}

@@ -15,19 +15,16 @@
             <tr>
                 <th scope="col" class="text-center align-middle">ID</th>
                 <th scope="col" class="text-center align-middle">Tarea</th>
-                <th scope="col" class="text-center align-middle">Descripcion</th>
-                <th scope="col" class="text-center align-middle">Prioridad</th>
                 <th scope="col" class="text-center align-middle">Encargado</th>
-                <th scope="col" class="text-center align-middle">Fecha creacion</th>
-                <th scope="col" class="text-center align-middle">Fecha completada</th>
+                <th scope="col" class="text-center align-middle">Prioridad</th>
                 <th scope="col" class="text-center align-middle">Estado</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="task : ${tasks}">
+            <tr th:each="task : ${tasks}" th:attr="onclick='window.location.href=\'/task-details/' + ${task.id} + '\''" style="cursor: pointer;">
                 <th th:text="${task.id}" scope="row"></th>
                 <td th:text="${task.title}"></td>
-                <td th:text="${task.description}"></td>
+                <td th:text="${task.assignedTo.username}"></td>
                 <td>
                     <span th:if="${task.priority.toString() == 'ALTA'}" class="badge bg-danger text-light"><i
                             class="bi bi-exclamation-triangle-fill"></i> ALTA</span>
@@ -36,9 +33,6 @@
                     <span th:if="${task.priority.toString() == 'BAJA'}" class="badge bg-success text-light"><i
                             class="bi bi-check-circle-fill"></i> BAJA</span>
                 </td>
-                <td th:text="${task.assignedTo.username}"></td>
-                <td th:text="${#temporals.format(task.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
-                <td th:text="${task.completedAt != null} ? ${#temporals.format(task.completedAt, 'dd/MM/yyyy HH:mm')} : 'No completada'"></td>
                 <td>
                     <span th:if="${task.status.toString() == 'COMPLETADO'}" class="badge bg-success text-white"><i
                             class="bi bi-check-circle-fill fs-2"></i></span>
@@ -53,13 +47,5 @@
     </div>
 </div>
 <div th:replace="~{fragments/footer :: footer}"></div>
-<script>
-    document.getElementById('scroll-to-top').addEventListener('click', function() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    });
-</script>
 </body>
 </html>
