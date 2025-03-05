@@ -47,8 +47,9 @@ Esta es una aplicación de gestión de tareas desarrollada con Spring Boot y Thy
 
 ## License / Licencia
 This project is licensed under the MIT License. See the [LICENSE](LICENSE)  file for details.
+
 Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
 
-Copyright (c) [2024] [Camilo Garay]
+Copyright (c) 2024 Camilo Garay
 
 
