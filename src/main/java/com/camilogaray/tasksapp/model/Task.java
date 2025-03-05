@@ -36,11 +36,16 @@ public class Task {
     @NotNull(message = "El usuario asignado no puede ser nulo")
     private User assignedTo;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "completed_at")
     private LocalDateTime completedAt;
+
+    @PrePersist
+    protected void onCreate(){
+        this.createdAt = LocalDateTime.now();
+    }
 
     public Task() {
     }

@@ -4,53 +4,70 @@
 </head>
 <body>
 <div th:replace="~{fragments/navigation :: navigation}"></div>
-
-
 <div class="container mt-5 pt-4">
-  <h2 class="text-center mb-4">Crear Nueva Tarea</h2>
+    <h2 class="text-center mb-4">Crear Nueva Tarea</h2>
+    <div class="card shadow-sm p-4">
 
-  <!-- Formulario dentro de una Tarjeta -->
-  <div class="card shadow-sm p-4">
-    <form th:action="@{/create-task}" method="post">
-      <!-- Campos del Formulario -->
-      <div class="mb-3">
-        <label for="taskTitle" class="form-label">Título</label>
-        <input type="text" class="form-control" id="taskTitle" name="title" required>
-      </div>
-      <div class="mb-3">
-        <label for="taskDescription" class="form-label">Descripción</label>
-        <textarea class="form-control" id="taskDescription" name="description" rows="3" required></textarea>
-      </div>
-      <div class="mb-3">
-        <label for="taskPriority" class="form-label">Prioridad</label>
-        <select class="form-select" id="taskPriority" name="priority" required>
-          <option value="ALTA">ALTA</option>
-          <option value="MEDIA">MEDIA</option>
-          <option value="BAJA">BAJA</option>
-        </select>
-      </div>
-      <div class="mb-3">
-        <label for="taskStatus" class="form-label">Estado</label>
-        <select class="form-select" id="taskStatus" name="status" required>
-          <option value="PENDIENTE">Pendiente</option>
-          <option value="COMPLETADO">Completado</option>
-        </select>
-      </div>
-      <div class="mb-3">
-        <label for="taskAssignedTo" class="form-label">Asignado a</label>
-        <select class="form-select" id="taskAssignedTo" name="assignedTo" required>
-          <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}"></option>
-        </select>
-      </div>
-      <div class="text-center">
-        <button type="submit" class="btn btn-primary">Guardar Tarea</button>
-        <a th:href="@{/edit-tasks}" class="btn btn-secondary">Cancelar</a>
-      </div>
-    </form>
-  </div>
+        <form th:action="@{/create-task}" th:object="${taskForm}" method="post">
+
+            <input type="hidden" th:field="*{id}"/>
+
+            <div class="mb-3">
+                <label for="taskTitle" class="form-label">Título</label>
+                <input type="text" class="form-control" id="taskTitle" th:field="*{title}" required>
+            </div>
+            <div class="mb-3">
+                <label for="taskDescription" class="form-label">Descripción</label>
+                <textarea class="form-control" id="taskDescription" th:field="*{description}" rows="3"
+                          required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="taskPriority" class="form-label">Prioridad</label>
+                <select class="form-select" id="taskPriority" th:field="*{priority}" required>
+                    <option value="ALTA">ALTA</option>
+                    <option value="MEDIA">MEDIA</option>
+                    <option value="BAJA">BAJA</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="taskStatus" class="form-label">Estado</label>
+                <select class="form-select" id="taskStatus" th:field="*{status}" required>
+                    <option value="PENDIENTE">Pendiente</option>
+                    <option value="COMPLETADO">Completado</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="taskAssignedTo" class="form-label">Asignado a</label>
+                <select class="form-select" id="taskAssignedTo" th:field="*{assignedTo.username}" required>
+                    <option th:each="user : ${users}" th:value="${user.username}" th:text="${user.username}"
+                            th:selected="${taskForm.assignedTo != null && user.username == taskForm.assignedTo.username}">
+                    </option>
+                </select>
+            </div>
+<!--            <div class="mb-3">-->
+<!--                <label for="taskAssignedTo" class="form-label">Asignado a</label>-->
+<!--                <select class="form-select" id="taskAssignedTo" th:field="*{assignedTo.id}" required>-->
+<!--                    <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}"-->
+<!--                            th:selected="${taskForm.assignedTo != null && user.id == taskForm.assignedTo.id}">-->
+<!--                    </option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--                <label for="taskAssignedTo" class="form-label">Asignado a</label>-->
+<!--                <select class="form-select" id="taskAssignedTo" th:field="*{assignedTo.username}" required>-->
+<!--                    <option th:each="user : ${users}" th:value="${user.username}" th:text="${user.username}"-->
+<!--                            th:selected="${taskForm.assignedTo != null && user.username == taskForm.assignedTo.username}">-->
+<!--                        >-->
+<!--                    </option>-->
+<!--                </select>-->
+<!--            </div>-->
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Guardar Tarea</button>
+                <a th:href="@{/edit-tasks}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
 </div>
-
-
 <div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>

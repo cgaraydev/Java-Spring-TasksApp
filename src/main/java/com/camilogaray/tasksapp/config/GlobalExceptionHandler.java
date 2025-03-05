@@ -2,6 +2,7 @@ package com.camilogaray.tasksapp.config;
 
 import com.camilogaray.tasksapp.exceptions.tasks.TaskListException;
 import com.camilogaray.tasksapp.exceptions.tasks.TaskNotFoundException;
+import com.camilogaray.tasksapp.exceptions.users.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -29,6 +30,13 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleGeneralException(Exception e, Model model) {
         model.addAttribute("error", "Ocurrió un error inesperado. Inténtalo de nuevo.");
+        return "error";
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleUserNotFoundException(UserNotFoundException e, Model model) {
+        model.addAttribute("error", e.getMessage());
         return "error";
     }
 
