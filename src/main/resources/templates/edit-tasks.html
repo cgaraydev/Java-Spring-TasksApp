@@ -48,12 +48,14 @@
                     <p><strong>Encargado:</strong> <span th:text="${task.assignedTo.username}"></span></p>
                     <p><strong>Estado:</strong>
                         <span th:if="${task.status.toString() == 'PENDIENTE'}" class="badge bg-warning">Pendiente</span>
-                        <span th:if="${task.status.toString() == 'COMPLETADO'}" class="badge bg-success">Completado</span>
+                        <span th:if="${task.status.toString() == 'COMPLETADO'}"
+                              class="badge bg-success">Completado</span>
                     </p>
                     <div class="d-grid gap-2">
-                        <a th:href="@{/edit-task/{id}(id=${task.id})}" class="btn btn-primary">Editar</a>
-                        <a th:href="@{/delete-task/{id}(id=${task.id})}" class="btn btn-danger">Eliminar</a>
-                        <a th:href="@{/assign-task/{id}(id=${task.id})}" class="btn btn-secondary">Asignar</a>
+                        <a th:href="@{/create-task/{id}(id=${task.id})}" class="btn btn-primary">Editar</a>
+                        <a th:href="@{/delete-task/{id}(id=${task.id})}" class="btn btn-danger"
+                           onclick="return confirm('¿Estás seguro de que deseas eliminar esta tarea?');">Eliminar</a>
+                        <!--                        <a th:href="@{/delete-task/{id}(id=${task.id})}" class="btn btn-danger">Eliminar</a>-->
                     </div>
                 </div>
             </div>

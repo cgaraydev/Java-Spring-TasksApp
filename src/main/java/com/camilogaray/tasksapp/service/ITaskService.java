@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface ITaskService {
     public List<Task> getTasks();
-    public Optional<Task> getTaskById(int id);
+    public Task getTaskById(int id);
     public void saveTask(Task task);
     public void deleteTask(int id);
 }

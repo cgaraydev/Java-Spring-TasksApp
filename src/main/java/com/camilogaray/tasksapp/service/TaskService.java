@@ -41,8 +41,8 @@ public class TaskService implements ITaskService {
     }
 
     @Override
-    public Optional<Task> getTaskById(int id) {
-        return repo.findById(id);
+    public Task getTaskById(int id) {
+        return repo.findById(id).orElse(null);
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.camilogaray.tasksapp.repo.TaskRepository;
 import com.camilogaray.tasksapp.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,10 +24,7 @@ public class UserService implements IUserService {
         return repo.findAll();
     }
 
-    @Override
-    public User getUserByName(String username) {
-        return repo.findByUsername(username).orElseThrow(() -> new UserNotFoundException("Usuario no encontrado"));
-    }
+
 }
 
 

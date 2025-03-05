@@ -11,6 +11,7 @@
         <form th:action="@{/create-task}" th:object="${taskForm}" method="post">
 
             <input type="hidden" th:field="*{id}"/>
+            <p>ID en formulario: <span th:text="*{id}"></span></p>
 
             <div class="mb-3">
                 <label for="taskTitle" class="form-label">Título</label>
@@ -39,28 +40,13 @@
             <div class="mb-3">
                 <label for="taskAssignedTo" class="form-label">Asignado a</label>
                 <select class="form-select" id="taskAssignedTo" th:field="*{assignedTo.username}" required>
-                    <option th:each="user : ${users}" th:value="${user.username}" th:text="${user.username}"
-                            th:selected="${taskForm.assignedTo != null && user.username == taskForm.assignedTo.username}">
+                    <option th:each="username : ${usernames}"
+                            th:value="${username}"
+                            th:text="${username}"
+                            th:selected="${taskForm.assignedTo != null && taskForm.assignedTo.username == username}">
                     </option>
                 </select>
             </div>
-<!--            <div class="mb-3">-->
-<!--                <label for="taskAssignedTo" class="form-label">Asignado a</label>-->
-<!--                <select class="form-select" id="taskAssignedTo" th:field="*{assignedTo.id}" required>-->
-<!--                    <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}"-->
-<!--                            th:selected="${taskForm.assignedTo != null && user.id == taskForm.assignedTo.id}">-->
-<!--                    </option>-->
-<!--                </select>-->
-<!--            </div>-->
-<!--            <div class="mb-3">-->
-<!--                <label for="taskAssignedTo" class="form-label">Asignado a</label>-->
-<!--                <select class="form-select" id="taskAssignedTo" th:field="*{assignedTo.username}" required>-->
-<!--                    <option th:each="user : ${users}" th:value="${user.username}" th:text="${user.username}"-->
-<!--                            th:selected="${taskForm.assignedTo != null && user.username == taskForm.assignedTo.username}">-->
-<!--                        >-->
-<!--                    </option>-->
-<!--                </select>-->
-<!--            </div>-->
             <div class="text-center">
                 <button type="submit" class="btn btn-primary">Guardar Tarea</button>
                 <a th:href="@{/edit-tasks}" class="btn btn-secondary">Cancelar</a>

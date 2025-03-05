@@ -8,5 +8,4 @@ import java.util.Optional;
 
 public interface IUserService {
     public List<User> getUsers();
-    public User getUserByName(String username);
 }
