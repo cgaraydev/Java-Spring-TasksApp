@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="confirmationModal(modalId, title, message, actionUrl, actionText)">
+  <div class="modal fade" th:id="${modalId}" tabindex="-1" aria-labelledby="${modalId} + 'Label'" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" th:id="${modalId} + 'Label'" th:text="${title}">¿Estás seguro?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p th:text="${message}">¿Estás seguro de que deseas realizar esta acción?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <form th:action="${actionUrl}" method="post">
+            <button type="submit" class="btn btn-success" th:text="${actionText}">Confirmar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

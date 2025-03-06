@@ -39,7 +39,8 @@
 
             <div class="mb-4">
                 <h4 class="text-secondary mb-3"><i class="bi bi-calendar-check me-2"></i> Fecha de completado</h4>
-                <p class="lead" th:text="${task.completedAt != null} ? ${#temporals.format(task.completedAt, 'dd/MM/yyyy HH:mm')} : 'No completada'"></p>
+                <p class="lead"
+                   th:text="${task.completedAt != null} ? ${#temporals.format(task.completedAt, 'dd/MM/yyyy HH:mm')} : 'No completada'"></p>
             </div>
 
             <div class="mb-4">
@@ -69,26 +70,35 @@
     </div>
 </div>
 
-<!-- Modal de Confirmación -->
-<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered"> <!-- Añadimos modal-dialog-centered para centrar el modal -->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmModalLabel">¿Estás seguro?</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ¿Estás seguro de que deseas completar esta tarea?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <form th:action="@{/complete-task/{id}(id=${task.id})}" method="post">
-                    <button type="submit" class="btn btn-success">Completar tarea</button>
-                </form>
-            </div>
-        </div>
-    </div>
+<div th:replace="~{fragments/confirmation-modal :: confirmationModal(
+    modalId='confirmModal',
+    title='¿Estás seguro?',
+    message='¿Estás seguro de que deseas completar esta tarea?',
+    actionUrl=@{/complete-task/{id}(id=${task.id})},
+    actionText='Completar tarea'
+)}">
 </div>
+
+<!--&lt;!&ndash; Modal de Confirmación &ndash;&gt;-->
+<!--<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">-->
+<!--    <div class="modal-dialog modal-dialog-centered">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <h5 class="modal-title" id="confirmModalLabel">¿Estás seguro?</h5>-->
+<!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                ¿Estás seguro de que deseas completar esta tarea?-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>-->
+<!--                <form th:action="@{/complete-task/{id}(id=${task.id})}" method="post">-->
+<!--                    <button type="submit" class="btn btn-success">Completar tarea</button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
 <div th:replace="~{fragments/footer :: footer}"></div>
 </body>

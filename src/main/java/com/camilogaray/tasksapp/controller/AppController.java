@@ -8,6 +8,8 @@ import com.camilogaray.tasksapp.service.UserService;
 import com.camilogaray.tasksapp.utils.TaskStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -89,41 +91,41 @@ public class AppController {
         }
     }
 
-    @GetMapping("/edit-tasks")
-    public String editTasks(Model model) {
+    @GetMapping("/manage-tasks")
+    public String manageTasks(Model model) {
         List<Task> tasks = taskService.getTasks();
         model.addAttribute("tasks", tasks);
-        return "edit-tasks";
+        return "manage-tasks";
     }
 
-    @GetMapping("/create-task")
-    public String createTask(Model model) {
+    @GetMapping("/create-update-task")
+    public String createUpdateTask(Model model) {
         model.addAttribute("taskForm", new Task());
         model.addAttribute("usernames", usernames);
-        return "create-task";
+        return "create-update-task";
     }
 
-    @GetMapping("/create-task/{id}")
+    @GetMapping("/create-update-task/{id}")
     public String showEditTask(@PathVariable(value = "id") Integer taskId, Model model) {
         Task task = taskService.getTaskById(taskId);
         logger.info("Tarea a editar: {}", task);
         model.addAttribute("taskForm", task);
         model.addAttribute("usernames", usernames);
-        return "create-task";
+        return "create-update-task";
     }
 
-    @PostMapping("/create-task")
+    @PostMapping("/create-update-task")
     public String editTask(@ModelAttribute("taskForm") Task task) {
         logger.info("Tarea a guardar: {}", task);
         taskService.saveTask(task);
-        return "redirect:/edit-tasks";
+        return "redirect:/manage-tasks";
     }
 
     @GetMapping("/delete-task/{id}")
     public String deleteTask(@PathVariable(value = "id") int taskId) {
         logger.info("Eliminando tarea con ID: {}", taskId);
         taskService.deleteTask(taskId);
-        return "redirect:/edit-tasks";
+        return "redirect:/manage-tasks";
     }
 
     @PostMapping("/complete-task/{id}")

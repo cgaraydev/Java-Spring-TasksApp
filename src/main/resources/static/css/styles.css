@@ -1,0 +1,31 @@
+.modal-content {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+    border-bottom: none;
+    background-color: #f8f9fa;
+    border-radius: 15px 15px 0 0;
+}
+
+.modal-footer {
+    border-top: none;
+    background-color: #f8f9fa;
+    border-radius: 0 0 15px 15px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    transition: transform 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.task-card {
+    transition: all 0.3s ease;
+}
+
+.task-card.hidden {
+    display: none;
+}

@@ -8,7 +8,7 @@
     <h2 class="text-center mb-4">Crear Nueva Tarea</h2>
     <div class="card shadow-sm p-4">
 
-        <form th:action="@{/create-task}" th:object="${taskForm}" method="post">
+        <form th:action="@{/create-update-task}" th:object="${taskForm}" method="post">
 
             <input type="hidden" th:field="*{id}"/>
             <p>ID en formulario: <span th:text="*{id}"></span></p>
@@ -19,7 +19,7 @@
             </div>
             <div class="mb-3">
                 <label for="taskDescription" class="form-label">Descripción</label>
-                <textarea class="form-control" id="taskDescription" th:field="*{description}" rows="3"
+                <textarea class="form-control" id="taskDescription" th:field="*{description}" rows="3" maxlength="255"
                           required></textarea>
             </div>
             <div class="mb-3">
