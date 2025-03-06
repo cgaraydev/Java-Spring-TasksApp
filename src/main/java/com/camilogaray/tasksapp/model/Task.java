@@ -47,6 +47,13 @@ public class Task {
         this.createdAt = LocalDateTime.now();
     }
 
+    @PreUpdate
+    protected void onUpdate() {
+        if (this.status == TaskStatus.COMPLETADO && this.completedAt == null) {
+            this.completedAt = LocalDateTime.now();
+        }
+    }
+
     public Task() {
     }
 

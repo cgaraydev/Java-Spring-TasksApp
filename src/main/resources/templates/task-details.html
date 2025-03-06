@@ -4,49 +4,91 @@
 <body>
 <div th:replace="~{fragments/navigation :: navigation}"></div>
 
-<div class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="card shadow-lg p-4 w-75">
-        <div class="row">
-            <div class="col-md-8">
-                <h2 class="text-center text-primary mb-4" th:text="${task.title}"></h2>
+<!-- Contenedor principal con más margen superior -->
+<div class="container-fluid mt-5 pt-5"> <!-- Aumenté el margen superior -->
+    <!-- Título centrado con más margen y color más oscuro -->
+    <h2 class="text-center text-dark mb-5" th:text="${task.title}"></h2> <!-- Cambié el color a text-dark -->
 
-                <p><i class="bi bi-card-text me-2"></i> <span th:text="${task.description}"></span></p>
-
-                <p><i class="bi bi-exclamation-circle me-2"></i>
-                    <span th:if="${task.priority.toString() == 'ALTA'}" class="text-danger">ALTA</span>
-                    <span th:if="${task.priority.toString() == 'MEDIA'}" class="text-warning">MEDIA</span>
-                    <span th:if="${task.priority.toString() == 'BAJA'}" class="text-success">BAJA</span>
-                </p>
-
-                <p><i class="bi bi-person me-2"></i> <span th:text="${task.assignedTo.username}"></span></p>
-
-                <p><i class="bi bi-calendar me-2"></i> <span
-                        th:text="${#temporals.format(task.createdAt, 'dd/MM/yyyy HH:mm')}"></span></p>
-
-                <p><i class="bi bi-calendar-check me-2"></i> <span
-                        th:text="${task.completedAt != null} ? ${#temporals.format(task.completedAt, 'dd/MM/yyyy HH:mm')} : 'No completada'"></span>
-                </p>
-
-                <p><i class="bi bi-info-circle me-2"></i> <span th:text="${task.status}"></span></p>
+    <!-- Contenedor de dos columnas -->
+    <div class="row justify-content-center">
+        <!-- Columna izquierda: Detalles de la tarea -->
+        <div class="col-md-6">
+            <div class="mb-4">
+                <h4 class="text-secondary mb-3"><i class="bi bi-card-text me-2"></i> Descripción</h4>
+                <p class="lead" th:text="${task.description}"></p>
             </div>
 
-            <div class="col-md-4 border-start d-flex align-items-center justify-content-center">
-                <div class="text-center">
-                    <form th:if="${task.status.toString() == 'PENDIENTE'}" th:action="@{/task/take/{id}(id=${task.id})}"
-                          method="post">
-                        <button type="submit" class="btn btn-outline-primary w-100">Tomar tarea</button>
-                    </form>
+            <div class="mb-4">
+                <h4 class="text-secondary mb-3"><i class="bi bi-exclamation-circle me-2"></i> Prioridad</h4>
+                <p>
+                    <span th:if="${task.priority.toString() == 'ALTA'}" class="badge bg-danger fs-5">ALTA</span>
+                    <span th:if="${task.priority.toString() == 'MEDIA'}" class="badge bg-warning fs-5">MEDIA</span>
+                    <span th:if="${task.priority.toString() == 'BAJA'}" class="badge bg-success fs-5">BAJA</span>
+                </p>
+            </div>
 
-                    <form th:if="${task.status.toString() == 'PENDIENTE'}"
-                          th:action="@{/task/complete/{id}(id=${task.id})}" method="post">
-                        <button type="submit" class="btn btn-outline-success w-100 mt-2">Completar tarea</button>
-                    </form>
-                </div>
+            <div class="mb-4">
+                <h4 class="text-secondary mb-3"><i class="bi bi-person me-2"></i> Asignado a</h4>
+                <p class="lead" th:text="${task.assignedTo.username}"></p>
+            </div>
+
+            <div class="mb-4">
+                <h4 class="text-secondary mb-3"><i class="bi bi-calendar me-2"></i> Fecha de creación</h4>
+                <p class="lead" th:text="${#temporals.format(task.createdAt, 'dd/MM/yyyy HH:mm')}"></p>
+            </div>
+
+            <div class="mb-4">
+                <h4 class="text-secondary mb-3"><i class="bi bi-calendar-check me-2"></i> Fecha de completado</h4>
+                <p class="lead" th:text="${task.completedAt != null} ? ${#temporals.format(task.completedAt, 'dd/MM/yyyy HH:mm')} : 'No completada'"></p>
+            </div>
+
+            <div class="mb-4">
+                <h4 class="text-secondary mb-3"><i class="bi bi-info-circle me-2"></i> Estado</h4>
+                <p class="lead" th:text="${task.status}"></p>
+            </div>
+        </div>
+
+        <!-- Columna derecha: Botones de acción con más margen izquierdo -->
+        <div class="col-md-4 d-flex align-items-center justify-content-center ms-5"> <!-- Añadí ms-5 para más margen -->
+            <div class="d-grid gap-3 w-100">
+                <form th:if="${task.status.toString() == 'PENDIENTE'}" th:action="@{/task/take/{id}(id=${task.id})}"
+                      method="post">
+                    <button type="submit" class="btn btn-outline-primary btn-lg w-100">
+                        <i class="bi bi-hand-thumbs-up me-2"></i> Tomar tarea
+                    </button>
+                </form>
+
+                <form th:if="${task.status.toString() == 'PENDIENTE'}">
+                    <button type="button" class="btn btn-outline-success btn-lg w-100"
+                            data-bs-toggle="modal" data-bs-target="#confirmModal">
+                        <i class="bi bi-check-circle me-2"></i> Completar tarea
+                    </button>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Modal de Confirmación -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"> <!-- Añadimos modal-dialog-centered para centrar el modal -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">¿Estás seguro?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que deseas completar esta tarea?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <form th:action="@{/complete-task/{id}(id=${task.id})}" method="post">
+                    <button type="submit" class="btn btn-success">Completar tarea</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div th:replace="~{fragments/footer :: footer}"></div>
 </body>

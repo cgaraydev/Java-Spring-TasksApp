@@ -50,6 +50,8 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE)  file
 
 Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
 
+
+
 Copyright (c) 2024 Camilo Garay
 
 
