@@ -14,17 +14,18 @@ Esta es una aplicación de gestión de tareas desarrollada con Spring Boot y Thy
 - **Spring Security**
 - **Spring Boot Validation**
 - **Hibernate**
-- **MySQL (or any relational database)**
-- **Maven (for dependency management)**
+- **MySQL**
+- **Maven**
 
 ### Frontend
 - **Thymeleaf (for server-side rendering)**
 - **HTML5**
 - **CSS3 (Bootstrap for styling)**
 - **JavaScript (for basic interactivity)**
+- **SweetAlert 2**
 
 ### Database
-- **MySQL (or any relational database supported by Spring Data JPA)**
+- **MySQL**
 
 
 ## Features / Características
