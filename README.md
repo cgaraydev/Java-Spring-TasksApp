@@ -18,7 +18,7 @@ Esta es una aplicación de gestión de tareas desarrollada con Spring Boot y Thy
 - **Maven**
 
 ### Frontend
-- **Thymeleaf (for server-side rendering)**
+- **Thymeleaf**
 - **HTML5**
 - **CSS3 (Bootstrap for styling)**
 - **JavaScript (for basic interactivity)**
